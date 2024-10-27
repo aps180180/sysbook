@@ -1,5 +1,6 @@
 import { Book } from "../models/book.model.js";
 import mongoose from "mongoose";
+
 export const createBook = async (req, res) => {
   const { title, subtitle, author, genre, cover } = req.body;
   try {
