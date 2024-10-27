@@ -1,9 +1,11 @@
 import "dotenv/config";
 import express from "express";
-import connectDatabase from "./db/connect";
-import { Book } from "./models/book.model";
+import {connectToDatabase} from "./db/connect.js";
+import { Book } from "./models/book.model.js";
 
 const app = express();
+
+app.use(express.json());
 
 app.post("/api/v1/books", async (req, res) => {
   const { title, subtitle, author, genre, cover } = req.body;
@@ -19,5 +21,5 @@ app.post("/api/v1/books", async (req, res) => {
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
-  connectDatabase();
+  connectToDatabase();
 });

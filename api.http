@@ -1,0 +1,14 @@
+@host = http://localhost:3000
+@baseUrl = {{host}}/api/v1
+@contentType = application/json
+
+POST {{baseUrl}}/books
+
+Content-Type: {{contentType}} 
+{
+    "title"  : "Lord of the Rings",
+    "subtitle": "A sociedade do Anel",
+    "author" : "J.R.R Tolkien",
+    "genre"  : "Fantasia",
+    "cover": "https://harpercollings.com.br/cdn/shop/products/9786555113631_79a81e4f-07c1-4aa8-ba58-b44033442bbf.jpg"
+}
