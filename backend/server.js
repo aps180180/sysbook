@@ -47,6 +47,32 @@ app.get("/api/v1/books/:id", async (req, res) => {
   }
 });
 
+app.put("/api/v1/books/:id", async (req, res) => {
+  const { id } = req.params;
+  const { title, subtitle, author, genre, cover } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ success: false, error: "Invalid Id" });
+  }
+  try {
+    const book = await Book.findById(id);
+    if (!book) {
+      return res.status(404).json({ sucess: false, error: "Book not found" });
+    }
+
+    const updatedBook = await Book.findByIdAndUpdate(
+      id,
+      { title, subtitle, author, genre, cover },
+      { new: true }
+    );
+
+   
+    res.status(200).json({ success: true, data: updatedBook });
+  } catch (error) {
+    console.error("Error updating book: ", error);
+    res.status(500).json({ success: false, error: "Error Updating book:" });
+  }
+});
+
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
   connectToDatabase();
