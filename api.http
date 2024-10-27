@@ -3,7 +3,6 @@
 @contentType = application/json
 
 POST {{baseUrl}}/books
-
 Content-Type: {{contentType}} 
 {
     "title"  : "Lord of the Rings",
@@ -12,3 +11,10 @@ Content-Type: {{contentType}}
     "genre"  : "Fantasia",
     "cover": "https://harpercollings.com.br/cdn/shop/products/9786555113631_79a81e4f-07c1-4aa8-ba58-b44033442bbf.jpg"
 }
+
+###
+GET {{baseUrl}}/books
+Content-Type:  {{contentType}}
+### 
+GET {{baseUrl}}/books/671e97a8385c08af27c7307c
+Content-Type:  {{contentType}}
