@@ -1,20 +1,23 @@
 import "dotenv/config";
 import express from "express";
-import mongoose from "mongoose";
+import connectDatabase from "./db/connect";
+import { Book } from "./models/book.model";
 
-async function connectToDatabase() {
-  try {
-    await mongoose.connect(process.env.MONGO_URI);
-    console.log("Connected to the Database");
-  } catch (error) {
-    console.error("Error connecting the databaase: ", error);
-    process.exit(1);
-  }
-}
 const app = express();
+
+app.post("/api/v1/books", async (req, res) => {
+  const { title, subtitle, author, genre, cover } = req.body;
+  try {
+    const book = new Book({ title, subtitle, author, genre, cover });
+    await book.save();
+    res.status(201).json({ sucess: true, data: book });
+  } catch (error) {
+    console.error("Error saving book: ", error);
+    res.status(500).json({ sucess: false, error: "Error saving book" });
+  }
+});
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
-  connectToDatabase();
+  connectDatabase();
 });
-
