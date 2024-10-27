@@ -65,11 +65,30 @@ app.put("/api/v1/books/:id", async (req, res) => {
       { new: true }
     );
 
-   
     res.status(200).json({ success: true, data: updatedBook });
   } catch (error) {
     console.error("Error updating book: ", error);
     res.status(500).json({ success: false, error: "Error Updating book:" });
+  }
+});
+
+app.delete("/api/v1/books/:id", async (req, res) => {
+  const { id } = req.params;
+  const { title, subtitle, author, genre, cover } = req.body;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ success: false, error: "Invalid Id" });
+  }
+
+  try {
+    const book = Book.findById(id);
+    if (!book) {
+      return res.status(404).json({ success: false, error: "Book not found" });
+    }
+    await Book.findByIdAndDelete(id);
+    res.status(200).json({ sucess: true, data: {} });
+  } catch (error) {
+    console.error("Error Deleting book: ", error);
+    res.status(500).json({ success: false, error: "Error Deleting book:" });
   }
 });
 
